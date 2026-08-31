@@ -11,491 +11,560 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
-   TOKENS
+   1. TOKENS
    ============================================================ */
 :root{
   --lino:        #E9E3D9;
-  --lino-osc:    #DED6C8;
   --arena:       #D6C4A6;
   --arena-osc:   #C0A985;
+  --arena-tenue: rgba(192,169,133,.42);
   --crema:       #F8F5EF;
   --oliva:       #8A8B6A;
   --oliva-claro: #A9AA8C;
+  --madera:      #C9B394;
+  --madera-osc:  #A98F6C;
   --tinta:       #55483C;
   --tinta-suave: #8A7D6E;
-  --dorado:      #B49A73;
 
-  --display: "Pinyon Script", cursive;
-  --texto:   "Cormorant Garamond", Georgia, serif;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans:  "Jost", "Segoe UI", sans-serif;
 
-  --ancho: 620px;
+  --ancho: 660px;
+  --sombra: 0 14px 34px -22px rgba(85,72,60,.5);
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
-
 html{ scroll-behavior:smooth; }
 
 body{
   margin:0;
-  font-family:var(--texto);
+  font-family:var(--serif);
   font-size:1.05rem;
   line-height:1.75;
   color:var(--tinta);
   background-color:var(--lino);
-  /* textura de lino sutil, generada, sin imágenes externas */
   background-image:
     repeating-linear-gradient(90deg, rgba(255,255,255,.22) 0 1px, transparent 1px 3px),
     repeating-linear-gradient(0deg,  rgba(140,120,95,.05) 0 1px, transparent 1px 3px);
   -webkit-font-smoothing:antialiased;
 }
+body.sin-scroll{ overflow:hidden; }
 
-img{ max-width:100%; display:block; }
-
-/* ============================================================
-   ESTRUCTURA
-   ============================================================ */
-.envoltura{
-  max-width:var(--ancho);
-  margin:0 auto;
-  padding:0 22px 90px;
-}
-
-.pieza{
-  background:var(--crema);
-  padding:56px 38px;
-  margin-bottom:34px;
-  box-shadow:0 14px 34px -22px rgba(85,72,60,.45);
-}
-
-.pieza--arena{ background:var(--arena); }
-.pieza--centro{ text-align:center; }
-
-/* El arco: la forma firma de toda la papelería */
-.arco{
-  border-radius:50% 50% 6px 6px / 24% 24% 2% 2%;
-  padding-top:96px;
-}
+p{ margin:0 0 1em; }
+button{ font:inherit; }
 
 /* ============================================================
-   TIPOGRAFÍA
+   2. TIPOGRAFÍA
    ============================================================ */
-.script{
-  font-family:var(--display);
-  font-weight:400;
-  line-height:1.1;
-  color:var(--tinta);
-}
-
 .nombres{
-  font-family:var(--display);
-  font-size:clamp(3.2rem, 12vw, 4.6rem);
-  line-height:1.05;
-  margin:.2em 0 .1em;
+  font-family:var(--serif);
+  font-weight:300;
+  font-size:clamp(1.9rem, 7.2vw, 2.9rem);
+  letter-spacing:.14em;
+  text-indent:.14em;
+  line-height:1.35;
+  margin:.35em 0 .3em;
 }
 .nombres .amper{
-  font-family:var(--texto);
+  display:block;
   font-style:italic;
-  font-size:.42em;
+  font-weight:300;
+  font-size:.62em;
+  letter-spacing:0;
+  text-indent:0;
   color:var(--tinta-suave);
-  display:block;
-  margin:.1em 0;
+  margin:.12em 0;
 }
 
-.titulo-seccion{
-  font-family:var(--display);
-  font-size:clamp(2rem, 7vw, 2.7rem);
-  font-weight:400;
-  margin:0 0 .1em;
-  line-height:1.1;
-}
-.titulo-seccion .continua{
-  display:block;
-  font-family:var(--texto);
-  font-size:.34em;
-  letter-spacing:.34em;
-  text-indent:.34em;
-  font-weight:400;
-  color:var(--tinta-suave);
-  margin-top:.5em;
+.titulo{
+  font-family:var(--serif);
+  font-weight:300;
+  font-size:clamp(1.5rem, 5.4vw, 2rem);
+  letter-spacing:.1em;
+  text-indent:.1em;
+  line-height:1.3;
+  margin:0 0 .35em;
 }
 
-.leyenda{
-  font-size:.82rem;
-  letter-spacing:.26em;
-  text-indent:.26em;
+.rotulo{
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:.72rem;
+  letter-spacing:.24em;
+  text-indent:.24em;
   color:var(--tinta-suave);
   margin:0;
 }
 
 .intro{
-  max-width:44ch;
-  margin:0 auto 2.2em;
+  max-width:42ch;
+  margin:0 auto 1.6em;
   color:var(--tinta-suave);
-  font-size:1.02rem;
+  font-size:1rem;
 }
 
-p{ margin:0 0 1em; }
-
-/* Espacios pendientes: se ven distintos a propósito */
 .pendiente{
   color:var(--tinta-suave);
   font-style:italic;
   border-bottom:1px dotted var(--arena-osc);
-  padding-bottom:2px;
+  padding-bottom:1px;
 }
 
-/* ============================================================
-   FILIGRANA / ORNAMENTOS
-   ============================================================ */
 .filete{
-  width:64px;
-  height:1px;
+  width:56px; height:1px;
   background:var(--arena-osc);
-  border:0;
-  margin:26px auto;
+  border:0; margin:20px auto;
 }
-
-.magnolia{
-  width:150px;
-  margin:0 auto 10px;
-  color:var(--oliva);
-}
-.magnolia--pie{ transform:rotate(180deg); margin:14px auto 0; }
-
-.esquina{
-  position:absolute;
-  width:190px;
-  color:var(--oliva-claro);
-  opacity:.9;
-  pointer-events:none;
-}
-.esquina--sup{ top:-26px; left:-46px; }
-.esquina--inf{ bottom:-30px; right:-50px; transform:rotate(180deg); }
 
 /* ============================================================
-   PORTADA
+   3. PUERTAS
    ============================================================ */
-.portada{
-  position:relative;
-  overflow:hidden;
-  min-height:88vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:70px 34px 80px;
-  margin:26px 0 34px;
+.zaguan{
+  position:fixed; inset:0;
+  z-index:100;
+  perspective:1600px;
+  background:var(--lino);
 }
+.zaguan.abierto{ pointer-events:none; }
+.zaguan.fuera{ display:none; }
 
-.saludo-invitado{
-  font-size:.8rem;
+.puerta{
+  position:absolute; top:0; bottom:0; width:50.4%;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.13), rgba(120,98,72,.16)),
+    var(--madera);
+  transition:transform 2.3s cubic-bezier(.55,.02,.28,1);
+  will-change:transform;
+  display:flex; align-items:center;
+  padding:5vh 4vw;
+  backface-visibility:hidden;
+}
+.puerta--izq{ left:0;  transform-origin:left center;  justify-content:flex-end; box-shadow:inset -22px 0 30px -24px rgba(60,44,28,.75); }
+.puerta--der{ right:0; transform-origin:right center; justify-content:flex-start; box-shadow:inset  22px 0 30px -24px rgba(60,44,28,.75); }
+
+.zaguan.abierto .puerta--izq{ transform:rotateY(-108deg); }
+.zaguan.abierto .puerta--der{ transform:rotateY( 108deg); }
+
+/* tablero interior con remate de arco */
+.tablero{
+  width:min(46vw, 300px);
+  height:min(74vh, 560px);
+  border:1px solid rgba(90,70,48,.34);
+  border-radius:min(23vw,150px) min(23vw,150px) 4px 4px;
+  box-shadow:inset 0 0 0 7px rgba(255,255,255,.11);
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+}
+.puerta--izq .tablero{ margin-right:6vw; }
+.puerta--der .tablero{ margin-left:6vw; }
+
+.tablero svg{ width:56%; color:rgba(90,70,48,.3); }
+
+/* argollas */
+.argolla{
+  position:absolute; top:50%;
+  width:34px; height:34px;
+  border:2px solid rgba(90,70,48,.42);
+  border-radius:50%;
+  transform:translateY(-50%);
+}
+.puerta--izq .argolla{ right:5vw; }
+.puerta--der .argolla{ left:5vw; }
+
+.invitacion-llamado{
+  position:absolute;
+  left:50%; bottom:11vh;
+  transform:translateX(-50%);
+  z-index:2;
+  text-align:center;
+  transition:opacity .6s ease;
+}
+.zaguan.abierto .invitacion-llamado{ opacity:0; }
+
+.invitacion-llamado button{
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:.78rem;
   letter-spacing:.24em;
   text-indent:.24em;
-  color:var(--tinta-suave);
-  margin-bottom:34px;
+  color:var(--crema);
+  background:rgba(85,68,46,.34);
+  border:1px solid rgba(248,245,239,.5);
+  border-radius:999px;
+  padding:15px 34px;
+  cursor:pointer;
+  backdrop-filter:blur(2px);
+  animation:latir 3.4s ease-in-out infinite;
 }
-.saludo-invitado b{
-  display:block;
-  font-family:var(--display);
-  font-size:2.1rem;
-  letter-spacing:0;
-  text-indent:0;
-  font-weight:400;
-  color:var(--tinta);
-  margin-top:.15em;
+.invitacion-llamado button:focus-visible{ outline:2px solid var(--crema); outline-offset:3px; }
+@keyframes latir{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.045); } }
+
+/* ============================================================
+   4. MARIPOSAS
+   ============================================================ */
+.enjambre{
+  position:fixed; inset:0;
+  z-index:99;
+  pointer-events:none;
+  overflow:hidden;
+}
+.mariposa{
+  position:absolute;
+  left:50%; top:58%;
+  width:var(--tam,22px);
+  opacity:0;
+  animation:volar var(--dur,5s) cubic-bezier(.22,.62,.4,1) var(--esp,0s) forwards;
+}
+.mariposa .ala{
+  transform-origin:center;
+  animation:aletear .34s ease-in-out infinite alternate;
+}
+@keyframes volar{
+  0%   { opacity:0; transform:translate(-50%,-50%) scale(.3) rotate(0deg); }
+  12%  { opacity:1; }
+  78%  { opacity:1; }
+  100% { opacity:0; transform:translate(var(--x),var(--y)) scale(1) rotate(var(--giro,20deg)); }
+}
+@keyframes aletear{ from{ transform:scaleX(1); } to{ transform:scaleX(.22); } }
+
+/* ============================================================
+   5. ESTRUCTURA
+   ============================================================ */
+.envoltura{
+  max-width:var(--ancho);
+  margin:0 auto;
+  padding:26px 20px 80px;
 }
 
-.bendicion{
-  max-width:34ch;
-  font-size:.95rem;
-  color:var(--tinta-suave);
-  margin-bottom:2.4em;
+.pieza{
+  background:var(--crema);
+  padding:44px 32px;
+  box-shadow:var(--sombra);
 }
+.pieza--arena{ background:var(--arena); }
+
+/* --- portada --- */
+.portada{
+  position:relative; overflow:hidden;
+  text-align:center;
+  padding:88px 30px 62px;
+  border-radius:50% 50% 6px 6px / 22% 22% 2% 2%;
+  margin-bottom:30px;
+}
+
+.esquina{ position:absolute; width:180px; color:var(--oliva-claro); pointer-events:none; }
+.esquina--sup{ top:-24px; left:-44px; }
+.esquina--inf{ bottom:-28px; right:-48px; transform:rotate(180deg); }
+
+.saludo{ margin-bottom:28px; }
+.saludo b{
+  display:block;
+  font-family:var(--serif);
+  font-weight:400; font-style:italic;
+  font-size:1.4rem;
+  letter-spacing:.02em; text-indent:0;
+  color:var(--tinta);
+  margin-top:.2em;
+}
+
+.bendicion{ max-width:32ch; margin:0 auto 2em; font-size:.96rem; color:var(--tinta-suave); }
 
 .padres{
-  display:flex;
-  gap:34px;
-  justify-content:center;
-  flex-wrap:wrap;
-  font-size:.94rem;
-  color:var(--tinta-suave);
-  margin-bottom:2.6em;
+  display:flex; gap:26px; justify-content:center; flex-wrap:wrap;
+  font-size:.92rem; color:var(--tinta-suave);
+  margin-bottom:2em;
 }
-.padres div{ min-width:150px; }
+.padres div{ min-width:140px; }
 
-.fecha-portada{
-  font-size:.9rem;
-  letter-spacing:.3em;
-  text-indent:.3em;
-  color:var(--tinta-suave);
-}
+.fecha-portada{ margin-top:1.2em; }
 
-/* ============================================================
-   CUENTA REGRESIVA
-   ============================================================ */
-.reloj{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin-top:26px;
-}
-.reloj div{
-  flex:1;
-  max-width:104px;
-  padding:16px 4px;
-  border:1px solid rgba(192,169,133,.5);
-}
+/* --- cuenta regresiva --- */
+.reloj{ display:flex; justify-content:center; gap:7px; margin-top:18px; }
+.reloj div{ flex:1; max-width:96px; padding:13px 4px; border:1px solid var(--arena-tenue); }
 .reloj span{
-  display:block;
-  font-size:2rem;
-  line-height:1;
-  font-weight:500;
-  font-variant-numeric:tabular-nums;
+  display:block; font-size:1.75rem; line-height:1;
+  font-weight:400; font-variant-numeric:tabular-nums;
 }
-.reloj small{
-  font-size:.66rem;
-  letter-spacing:.18em;
-  color:var(--tinta-suave);
-}
+.reloj small{ font-family:var(--sans); font-weight:300; font-size:.62rem; letter-spacing:.16em; color:var(--tinta-suave); }
 
 /* ============================================================
-   ITINERARIO
+   6. FICHAS
    ============================================================ */
-.momento{
-  padding:30px 0;
-  border-bottom:1px solid rgba(192,169,133,.4);
+.mosaico{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:30px;
 }
-.momento:last-of-type{ border-bottom:0; padding-bottom:6px; }
 
-.momento h3{
-  font-family:var(--display);
-  font-size:2rem;
-  font-weight:400;
-  margin:0 0 .3em;
+.ficha{
+  appearance:none;
+  background:var(--crema);
+  border:1px solid var(--arena-tenue);
+  box-shadow:var(--sombra);
+  padding:26px 18px 22px;
+  text-align:center;
+  cursor:pointer;
+  color:var(--tinta);
+  transition:background .4s ease, border-color .4s ease, transform .4s ease;
 }
-.momento .hora{
-  font-size:.84rem;
-  letter-spacing:.24em;
-  color:var(--tinta-suave);
+.ficha:hover, .ficha:focus-visible{
+  background:#FFFCF7;
+  border-color:var(--arena-osc);
+  transform:translateY(-2px);
+}
+.ficha:focus-visible{ outline:2px solid var(--tinta); outline-offset:2px; }
+
+.ficha svg{ width:34px; height:34px; color:var(--oliva); margin:0 auto 12px; display:block; }
+.ficha b{
   display:block;
-  margin-bottom:1em;
+  font-family:var(--serif); font-weight:400;
+  font-size:1.18rem; letter-spacing:.06em;
+  line-height:1.3;
 }
-.momento address{
-  font-style:normal;
-  color:var(--tinta-suave);
-  margin-bottom:1.1em;
+.ficha em{
+  display:block;
+  font-family:var(--sans); font-weight:300; font-style:normal;
+  font-size:.68rem; letter-spacing:.14em;
+  color:var(--tinta-suave); margin-top:5px;
 }
+
+.ficha--ancha{ grid-column:1 / -1; background:var(--arena); border-color:var(--arena-osc); }
+.ficha--ancha:hover, .ficha--ancha:focus-visible{ background:var(--arena-osc); }
+.ficha--ancha svg{ color:var(--crema); }
+.ficha--ancha b, .ficha--ancha em{ color:var(--crema); }
 
 /* ============================================================
-   BOTONES
+   7. PANEL
+   ============================================================ */
+.telon{
+  position:fixed; inset:0; z-index:80;
+  background:rgba(60,50,40,.44);
+  backdrop-filter:blur(3px);
+  opacity:0; pointer-events:none;
+  transition:opacity .4s ease;
+  display:flex; align-items:flex-end; justify-content:center;
+}
+.telon.visible{ opacity:1; pointer-events:auto; }
+
+.panel{
+  background:var(--crema);
+  width:100%; max-width:var(--ancho);
+  max-height:88vh; overflow-y:auto;
+  padding:22px 30px 44px;
+  border-radius:22px 22px 0 0;
+  transform:translateY(100%);
+  transition:transform .45s cubic-bezier(.2,.72,.3,1);
+}
+.telon.visible .panel{ transform:none; }
+
+.asa{ width:44px; height:4px; border-radius:2px; background:var(--arena-osc); margin:0 auto 20px; }
+
+.cerrar{
+  position:absolute; top:14px; right:18px;
+  background:none; border:0; cursor:pointer;
+  font-size:1.5rem; line-height:1; color:var(--tinta-suave);
+  padding:6px 10px;
+}
+.cerrar:focus-visible{ outline:2px solid var(--tinta); }
+
+.panel-cabeza{ text-align:center; position:relative; margin-bottom:8px; }
+
+@media (min-width:640px){
+  .telon{ align-items:center; }
+  .panel{ border-radius:4px; max-height:84vh; transform:translateY(24px) scale(.97); opacity:0; transition:transform .4s ease, opacity .4s ease; }
+  .telon.visible .panel{ transform:none; opacity:1; }
+  .asa{ display:none; }
+}
+
+/* --- contenido de paneles --- */
+.momento{ padding:22px 0; border-bottom:1px solid var(--arena-tenue); }
+.momento:last-of-type{ border-bottom:0; }
+.momento h3{ font-family:var(--serif); font-weight:400; font-size:1.35rem; letter-spacing:.06em; margin:0 0 .2em; }
+.momento .hora{ font-family:var(--sans); font-weight:300; font-size:.74rem; letter-spacing:.18em; color:var(--tinta-suave); display:block; margin-bottom:.9em; }
+.momento address{ font-style:normal; color:var(--tinta-suave); margin-bottom:1em; }
+
+/* ============================================================
+   8. BOTONES
    ============================================================ */
 .boton{
   display:inline-block;
-  font-family:var(--texto);
-  font-size:.82rem;
-  letter-spacing:.2em;
-  text-indent:.2em;
-  text-decoration:none;
-  color:var(--tinta);
-  background:transparent;
+  font-family:var(--sans); font-weight:400;
+  font-size:.76rem; letter-spacing:.18em; text-indent:.18em;
+  text-decoration:none; text-align:center;
+  color:var(--tinta); background:transparent;
   border:1px solid var(--arena-osc);
-  padding:13px 30px;
-  cursor:pointer;
+  padding:13px 26px; cursor:pointer;
   transition:background .35s ease, color .35s ease;
 }
-.boton:hover,
-.boton:focus-visible{
-  background:var(--arena);
-  color:var(--crema);
-}
+.boton:hover, .boton:focus-visible{ background:var(--arena); color:var(--crema); }
+.boton:focus-visible{ outline:2px solid var(--tinta); outline-offset:2px; }
 
-.boton--lleno{
-  background:var(--tinta);
-  border-color:var(--tinta);
-  color:var(--crema);
-  width:100%;
-  margin-top:14px;
-}
-.boton--lleno:hover,
-.boton--lleno:focus-visible{
-  background:var(--arena-osc);
-  border-color:var(--arena-osc);
-  color:var(--crema);
-}
+.boton--lleno{ background:var(--tinta); border-color:var(--tinta); color:var(--crema); }
+.boton--lleno:hover, .boton--lleno:focus-visible{ background:var(--arena-osc); border-color:var(--arena-osc); }
+.boton--bloque{ display:block; width:100%; }
+.boton[disabled]{ opacity:.5; cursor:not-allowed; }
 
-.par-botones{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-top:22px;
-}
+.par-botones{ display:flex; gap:10px; flex-wrap:wrap; }
+.par-botones .boton{ flex:1; min-width:150px; }
 
 /* ============================================================
-   FORMULARIO
+   9. FORMULARIO POR PASOS
    ============================================================ */
-.campo{ margin-bottom:24px; text-align:left; }
+.progreso{ display:flex; gap:6px; justify-content:center; margin-bottom:26px; }
+.progreso i{ width:22px; height:2px; background:var(--arena-tenue); transition:background .3s ease; }
+.progreso i.activo{ background:var(--tinta); }
 
-.campo label,
-.grupo legend{
-  display:block;
-  font-size:.74rem;
-  letter-spacing:.2em;
-  color:var(--tinta-suave);
-  margin-bottom:9px;
+.paso{ display:none; animation:entrapaso .4s ease; }
+.paso.activo{ display:block; }
+@keyframes entrapaso{ from{ opacity:0; transform:translateX(14px); } to{ opacity:1; transform:none; } }
+
+.pregunta{
+  font-family:var(--serif); font-weight:400;
+  font-size:1.4rem; letter-spacing:.04em;
+  text-align:center; margin:0 0 1.4em;
 }
 
+.campo{ margin-bottom:22px; }
+.campo label{
+  display:block;
+  font-family:var(--sans); font-weight:300;
+  font-size:.7rem; letter-spacing:.18em;
+  color:var(--tinta-suave); margin-bottom:8px;
+}
 .campo input[type="text"],
-.campo input[type="number"],
 .campo textarea{
   width:100%;
-  font-family:var(--texto);
-  font-size:1.05rem;
-  color:var(--tinta);
-  background:transparent;
-  border:0;
-  border-bottom:1px solid var(--arena-osc);
+  font-family:var(--serif); font-size:1.05rem; color:var(--tinta);
+  background:transparent; border:0; border-bottom:1px solid var(--arena-osc);
   padding:9px 2px;
   transition:border-color .3s ease;
 }
-.campo input:focus,
-.campo textarea:focus{
-  outline:0;
-  border-bottom-color:var(--tinta);
-}
-.campo textarea{ resize:vertical; min-height:70px; }
+.campo input:focus, .campo textarea:focus{ outline:0; border-bottom-color:var(--tinta); }
+.campo textarea{ resize:vertical; min-height:76px; }
 
-.grupo{ border:0; padding:0; margin:0 0 24px; text-align:left; }
-
-.opciones{ display:flex; gap:12px; }
-.opciones label{
-  flex:1;
-  text-align:center;
-  font-size:.84rem;
-  letter-spacing:.14em;
-  color:var(--tinta);
+.eleccion{ display:grid; gap:10px; }
+.eleccion button{
+  background:var(--crema);
   border:1px solid var(--arena-osc);
-  padding:12px;
-  cursor:pointer;
-  margin:0;
+  padding:18px;
+  font-family:var(--serif); font-size:1.1rem; letter-spacing:.04em;
+  color:var(--tinta); cursor:pointer;
   transition:background .3s ease, color .3s ease;
 }
-.opciones input{ position:absolute; opacity:0; pointer-events:none; }
-.opciones input:checked + span{ font-weight:600; }
-.opciones label:has(input:checked){
-  background:var(--arena);
-  border-color:var(--arena-osc);
-  color:var(--crema);
-}
-.opciones label:focus-within{ outline:2px solid var(--tinta); outline-offset:2px; }
+.eleccion button:hover, .eleccion button:focus-visible{ background:var(--arena); color:var(--crema); }
 
-.aviso{
-  font-size:.9rem;
-  color:var(--tinta-suave);
-  text-align:center;
-  margin-top:18px;
-  min-height:1.5em;
+.contador{ display:flex; align-items:center; justify-content:center; gap:22px; margin:10px 0 6px; }
+.contador button{
+  width:44px; height:44px; border-radius:50%;
+  border:1px solid var(--arena-osc); background:transparent;
+  font-size:1.4rem; line-height:1; color:var(--tinta); cursor:pointer;
 }
+.contador button:hover{ background:var(--arena); color:var(--crema); }
+.contador output{ font-size:2.2rem; min-width:2ch; text-align:center; font-variant-numeric:tabular-nums; }
 
-.separador-o{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  color:var(--tinta-suave);
-  font-size:.76rem;
-  letter-spacing:.2em;
-  margin:34px 0 18px;
+.pie-paso{ display:flex; gap:10px; margin-top:26px; }
+.pie-paso .boton{ flex:1; }
+
+.aviso{ font-family:var(--sans); font-weight:300; font-size:.84rem; color:var(--tinta-suave); text-align:center; margin-top:14px; min-height:1.3em; }
+.aviso.error{ color:#9C5B4A; }
+
+.separador{
+  display:flex; align-items:center; gap:12px;
+  font-family:var(--sans); font-weight:300; font-size:.7rem; letter-spacing:.18em;
+  color:var(--tinta-suave); margin:30px 0 16px;
 }
-.separador-o::before,
-.separador-o::after{
-  content:"";
-  flex:1;
-  height:1px;
-  background:rgba(192,169,133,.5);
-}
+.separador::before, .separador::after{ content:""; flex:1; height:1px; background:var(--arena-tenue); }
+
+.listo{ text-align:center; padding:20px 0; }
+.listo svg{ width:60px; color:var(--oliva); margin:0 auto 18px; display:block; }
 
 /* ============================================================
-   PIE
+   10. PIE
    ============================================================ */
-.pie{
-  text-align:center;
-  padding:20px 0 0;
-  color:var(--tinta-suave);
-  font-size:.86rem;
-}
-.pie .script{ font-size:2.3rem; display:block; margin-bottom:.1em; }
+.pie{ text-align:center; margin-top:34px; color:var(--tinta-suave); }
+.pie .cierre{ font-family:var(--serif); font-style:italic; font-size:1.5rem; color:var(--tinta); display:block; margin-bottom:.1em; }
+.pie svg{ width:120px; color:var(--oliva); margin:0 auto 10px; display:block; }
 
 /* ============================================================
-   MOVIMIENTO
+   11. MOVIMIENTO
    ============================================================ */
-.revelar{
-  opacity:0;
-  transform:translateY(22px);
-  transition:opacity 1.1s ease, transform 1.1s ease;
-}
+.revelar{ opacity:0; transform:translateY(20px); transition:opacity 1s ease, transform 1s ease; }
 .revelar.visible{ opacity:1; transform:none; }
-
-/* Entrada orquestada de la portada */
-.entra{ opacity:0; animation:aparecer 1.4s ease forwards; }
-.entra:nth-child(1){ animation-delay:.15s; }
-.entra:nth-child(2){ animation-delay:.45s; }
-.entra:nth-child(3){ animation-delay:.75s; }
-.entra:nth-child(4){ animation-delay:1.05s; }
-.entra:nth-child(5){ animation-delay:1.3s; }
-.entra:nth-child(6){ animation-delay:1.5s; }
-
-@keyframes aparecer{
-  from{ opacity:0; transform:translateY(16px); }
-  to{ opacity:1; transform:none; }
-}
-
-/* Trazo de la magnolia de portada */
-.traza path,
-.traza ellipse,
-.traza circle{
-  stroke-dasharray:600;
-  stroke-dashoffset:600;
-  animation:dibujar 3s ease forwards .3s;
-}
-@keyframes dibujar{ to{ stroke-dashoffset:0; } }
 
 @media (prefers-reduced-motion:reduce){
   html{ scroll-behavior:auto; }
-  .revelar,.entra{ opacity:1 !important; transform:none !important; animation:none !important; }
-  .traza path,.traza ellipse,.traza circle{ stroke-dashoffset:0; animation:none; }
+  .revelar{ opacity:1 !important; transform:none !important; }
+  .puerta{ transition:none; }
+  .mariposa{ display:none; }
+  .invitacion-llamado button{ animation:none; }
+  .paso{ animation:none; }
 }
 
 /* ============================================================
-   RESPONSIVE
+   12. RESPONSIVE
    ============================================================ */
 @media (max-width:560px){
-  .pieza{ padding:44px 26px; }
-  .arco{ padding-top:76px; }
-  .portada{ padding:56px 24px 66px; }
-  .esquina{ width:130px; }
-  .esquina--sup{ left:-40px; top:-18px; }
-  .esquina--inf{ right:-42px; bottom:-20px; }
+  .pieza{ padding:34px 22px; }
+  .portada{ padding:70px 22px 50px; }
+  .esquina{ width:126px; }
+  .esquina--sup{ left:-38px; top:-16px; }
+  .esquina--inf{ right:-40px; bottom:-18px; }
   .reloj{ gap:5px; }
-  .reloj div{ padding:12px 2px; }
-  .reloj span{ font-size:1.5rem; }
-  .par-botones .boton{ width:100%; }
+  .reloj span{ font-size:1.4rem; }
+  .panel{ padding:20px 22px 40px; }
+  .mosaico{ gap:11px; }
+  .ficha{ padding:22px 12px 18px; }
+  .ficha b{ font-size:1.05rem; }
 }
 </style>
 </head>
-<body>
+<body class="sin-scroll">
 
+<!-- ============================================================
+     PUERTAS
+     ============================================================ -->
+<div class="zaguan" id="zaguan">
+  <div class="puerta puerta--izq">
+    <div class="tablero">
+      <svg viewBox="0 0 100 160" fill="none" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.4">
+          <path d="M50 18 V142"/><path d="M22 52 H78"/>
+          <path d="M50 18 C34 34, 30 52, 50 66 C70 52, 66 34, 50 18Z" fill="none"/>
+        </g>
+      </svg>
+    </div>
+    <span class="argolla"></span>
+  </div>
+  <div class="puerta puerta--der">
+    <div class="tablero">
+      <svg viewBox="0 0 100 160" fill="none" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.4">
+          <path d="M50 18 V142"/><path d="M22 52 H78"/>
+          <path d="M50 18 C34 34, 30 52, 50 66 C70 52, 66 34, 50 18Z" fill="none"/>
+        </g>
+      </svg>
+    </div>
+    <span class="argolla"></span>
+  </div>
+
+  <div class="invitacion-llamado">
+    <button type="button" id="btn-abrir">Abrir la invitación</button>
+  </div>
+</div>
+
+<div class="enjambre" id="enjambre" aria-hidden="true"></div>
+
+<!-- ============================================================
+     CONTENIDO
+     ============================================================ -->
 <div class="envoltura">
 
-  <!-- ==========================================================
-       PORTADA
-       ========================================================== -->
-  <header class="portada pieza pieza--arena arco">
-
+  <header class="pieza pieza--arena portada">
     <svg class="esquina esquina--sup" viewBox="0 0 200 200" fill="none" aria-hidden="true">
       <g stroke="currentColor" stroke-width="1.1">
         <path d="M18 12 C60 44, 96 82, 128 132" fill="none"/>
@@ -503,10 +572,8 @@ p{ margin:0 0 1em; }
         <path d="M74 70 C88 50, 114 46, 128 58 C114 76, 88 80, 74 70Z" fill="rgba(248,245,239,.55)"/>
         <path d="M100 104 C116 86, 142 84, 154 96 C140 114, 114 116, 100 104Z" fill="rgba(248,245,239,.55)"/>
         <ellipse cx="140" cy="150" rx="26" ry="15" transform="rotate(-28 140 150)" fill="rgba(248,245,239,.7)"/>
-        <ellipse cx="166" cy="128" rx="20" ry="12" transform="rotate(-52 166 128)" fill="rgba(248,245,239,.7)"/>
       </g>
     </svg>
-
     <svg class="esquina esquina--inf" viewBox="0 0 200 200" fill="none" aria-hidden="true">
       <g stroke="currentColor" stroke-width="1.1">
         <path d="M18 12 C60 44, 96 82, 128 132" fill="none"/>
@@ -516,54 +583,32 @@ p{ margin:0 0 1em; }
       </g>
     </svg>
 
-    <!-- Se rellena solo si el enlace trae ?invitado=Familia%20Hidalgo -->
-    <p class="saludo-invitado entra" id="saludo" hidden>
+    <p class="rotulo saludo" id="saludo" hidden>
       Invitación para
       <b id="nombre-invitado"></b>
     </p>
 
-    <svg class="magnolia traza entra" viewBox="0 0 150 80" fill="none" aria-hidden="true">
-      <g stroke="currentColor" stroke-width="1.1" fill="none">
-        <path d="M8 40 H60"/>
-        <path d="M90 40 H142"/>
-        <ellipse cx="75" cy="40" rx="13" ry="7"/>
-        <path d="M62 34 C68 26, 82 26, 88 34"/>
-        <path d="M62 46 C68 54, 82 54, 88 46"/>
-        <ellipse cx="46" cy="33" rx="10" ry="5" transform="rotate(-18 46 33)"/>
-        <ellipse cx="104" cy="47" rx="10" ry="5" transform="rotate(-18 104 47)"/>
-      </g>
-    </svg>
-
-    <p class="bendicion entra">
+    <p class="bendicion">
       Con la bendición de Dios y de nuestros padres, queremos compartir contigo
       el día en que unimos nuestras vidas.
     </p>
 
-    <div class="padres entra">
-      <div>
-        <span class="pendiente">Padres de la novia</span>
-      </div>
-      <div>
-        <span class="pendiente">Padres del novio</span>
-      </div>
+    <div class="padres">
+      <div><span class="pendiente">Padres de la novia</span></div>
+      <div><span class="pendiente">Padres del novio</span></div>
     </div>
 
-    <h1 class="nombres entra">
+    <h1 class="nombres">
       Zulma&nbsp;Hidalia
       <span class="amper">&amp;</span>
       José&nbsp;Isaac
     </h1>
 
-    <p class="fecha-portada entra">
-      <span class="pendiente">fecha por definir</span>
-    </p>
+    <p class="rotulo fecha-portada"><span class="pendiente">fecha por definir</span></p>
   </header>
 
-  <!-- ==========================================================
-       CUENTA REGRESIVA
-       ========================================================== -->
-  <section class="pieza pieza--centro revelar">
-    <p class="leyenda">Faltan</p>
+  <section class="pieza revelar" style="text-align:center">
+    <p class="rotulo">Faltan</p>
     <div class="reloj" id="reloj">
       <div><span data-u="d">--</span><small>días</small></div>
       <div><span data-u="h">--</span><small>horas</small></div>
@@ -573,152 +618,289 @@ p{ margin:0 0 1em; }
     <p class="aviso" id="aviso-reloj">La cuenta empieza cuando tengamos la fecha.</p>
   </section>
 
-  <!-- ==========================================================
-       ITINERARIO
-       ========================================================== -->
-  <section class="pieza revelar">
-    <div class="pieza--centro">
-      <h2 class="titulo-seccion">Itinerario<span class="continua">de la boda</span></h2>
-      <hr class="filete">
-    </div>
+  <!-- FICHAS -->
+  <nav class="mosaico revelar" aria-label="Secciones de la invitación">
 
-    <div class="momento">
-      <h3>Ceremonia religiosa</h3>
-      <span class="hora"><span class="pendiente">hora por definir</span></span>
-      <address>
-        <span class="pendiente">Nombre del templo</span><br>
-        <span class="pendiente">Dirección</span>
-      </address>
-      <a class="boton" href="#" data-mapa>Cómo llegar</a>
-    </div>
+    <button class="ficha" type="button" data-abre="panel-itinerario">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+        <circle cx="20" cy="20" r="14"/><path d="M20 12 V20 L26 23"/>
+      </svg>
+      <b>Itinerario</b><em>ceremonia y fiesta</em>
+    </button>
 
-    <div class="momento">
-      <h3>Recepción</h3>
-      <span class="hora"><span class="pendiente">hora por definir</span></span>
-      <address>
-        <span class="pendiente">Nombre del salón</span><br>
-        <span class="pendiente">Dirección</span>
-      </address>
-      <a class="boton" href="#" data-mapa>Cómo llegar</a>
-    </div>
-  </section>
+    <button class="ficha" type="button" data-abre="panel-lugares">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+        <path d="M20 34 C20 34, 31 24, 31 16 A11 11 0 1 0 9 16 C9 24, 20 34, 20 34Z"/>
+        <circle cx="20" cy="16" r="4"/>
+      </svg>
+      <b>Cómo llegar</b><em>iglesia y salón</em>
+    </button>
 
-  <!-- ==========================================================
-       CÓDIGO DE VESTIMENTA
-       ========================================================== -->
-  <section class="pieza pieza--arena pieza--centro revelar">
-    <h2 class="titulo-seccion">Código<span class="continua">de vestimenta</span></h2>
-    <hr class="filete">
-    <p class="intro"><span class="pendiente">Formal / etiqueta rigurosa — por definir</span></p>
-    <p class="leyenda">Les pedimos reservar el blanco para la novia</p>
-  </section>
+    <button class="ficha" type="button" data-abre="panel-vestimenta">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+        <path d="M14 8 L20 13 L26 8 L33 13 L29 18 V33 H11 V18 L7 13Z"/>
+      </svg>
+      <b>Vestimenta</b><em>código del evento</em>
+    </button>
 
-  <!-- ==========================================================
-       MESA DE REGALOS
-       ========================================================== -->
-  <section class="pieza pieza--centro revelar">
-    <h2 class="titulo-seccion">Mesa<span class="continua">de regalos</span></h2>
-    <hr class="filete">
-    <p class="intro">
-      Nuestro mayor regalo es tu presencia. Si además deseas obsequiarnos algo,
-      aquí te dejamos algunas opciones.
-    </p>
-    <p><span class="pendiente">Tienda o número de mesa — por definir</span></p>
-    <p><span class="pendiente">Datos para lluvia de sobres — por definir</span></p>
-  </section>
+    <button class="ficha" type="button" data-abre="panel-regalos">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+        <rect x="8" y="17" width="24" height="16"/><path d="M6 12h28v5H6z"/><path d="M20 12v21"/>
+        <path d="M20 12 C16 6, 10 8, 12 12"/><path d="M20 12 C24 6, 30 8, 28 12"/>
+      </svg>
+      <b>Mesa de regalos</b><em>si deseas obsequiar</em>
+    </button>
 
-  <!-- ==========================================================
-       CONFIRMACIÓN DE ASISTENCIA
-       ========================================================== -->
-  <section class="pieza revelar" id="confirmar">
-    <div class="pieza--centro">
-      <h2 class="titulo-seccion">Confirmación<span class="continua">de asistencia</span></h2>
-      <hr class="filete">
-      <p class="intro">
-        Para organizar cada detalle, te pedimos confirmar antes del
-        <span class="pendiente">fecha límite por definir</span>.
-      </p>
-    </div>
+    <button class="ficha ficha--ancha" type="button" data-abre="panel-rsvp">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+        <rect x="6" y="10" width="28" height="20" rx="2"/><path d="M6 12 L20 22 L34 12"/>
+      </svg>
+      <b>Confirmar asistencia</b><em>toca aquí para responder</em>
+    </button>
 
-    <form id="form-rsvp" novalidate>
-      <div class="campo">
-        <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" name="nombre" autocomplete="name" required>
-      </div>
+  </nav>
 
-      <fieldset class="grupo">
-        <legend>¿Podrás acompañarnos?</legend>
-        <div class="opciones">
-          <label><input type="radio" name="asistencia" value="Sí" required><span>Sí, ahí estaré</span></label>
-          <label><input type="radio" name="asistencia" value="No"><span>No podré</span></label>
-        </div>
-      </fieldset>
-
-      <div class="campo">
-        <label for="acompanantes">Número de personas, incluyéndote</label>
-        <input type="number" id="acompanantes" name="acompanantes" min="1" max="10" value="1">
-      </div>
-
-      <div class="campo">
-        <label for="mensaje">Un mensaje para los novios (opcional)</label>
-        <textarea id="mensaje" name="mensaje" rows="3"></textarea>
-      </div>
-
-      <button type="submit" class="boton boton--lleno" id="btn-enviar">Enviar confirmación</button>
-      <p class="aviso" id="aviso-form" role="status" aria-live="polite"></p>
-    </form>
-
-    <p class="separador-o">o si prefieres</p>
-
-    <div class="par-botones">
-      <a class="boton" id="wa-zulma" href="#" target="_blank" rel="noopener">Escribir a Zulma</a>
-      <a class="boton" id="wa-isaac" href="#" target="_blank" rel="noopener">Escribir a Isaac</a>
-    </div>
-  </section>
-
-  <!-- ==========================================================
-       PIE
-       ========================================================== -->
   <footer class="pie revelar">
-    <svg class="magnolia magnolia--pie" viewBox="0 0 150 80" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 150 60" fill="none" aria-hidden="true">
       <g stroke="currentColor" stroke-width="1.1" fill="none">
-        <path d="M8 40 H60"/><path d="M90 40 H142"/>
-        <ellipse cx="75" cy="40" rx="13" ry="7"/>
-        <path d="M62 34 C68 26, 82 26, 88 34"/>
-        <path d="M62 46 C68 54, 82 54, 88 46"/>
+        <path d="M8 30 H60"/><path d="M90 30 H142"/>
+        <ellipse cx="75" cy="30" rx="13" ry="7"/>
+        <path d="M62 24 C68 16, 82 16, 88 24"/><path d="M62 36 C68 44, 82 44, 88 36"/>
       </g>
     </svg>
-    <span class="script">Te esperamos</span>
-    <p>Zulma &amp; Isaac</p>
+    <span class="cierre">Te esperamos</span>
+    <p class="rotulo">Zulma &amp; Isaac</p>
   </footer>
 
 </div>
 
+<!-- ============================================================
+     PANELES
+     ============================================================ -->
+<div class="telon" id="telon">
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="titulo-panel" id="panel">
+    <div class="asa"></div>
+    <button class="cerrar" type="button" id="btn-cerrar" aria-label="Cerrar">&times;</button>
+    <div id="cuerpo-panel"></div>
+  </div>
+</div>
+
+<!-- Contenido de cada panel, oculto hasta que se abre -->
+<template id="panel-itinerario">
+  <div class="panel-cabeza">
+    <h2 class="titulo" id="titulo-panel">Itinerario</h2>
+    <hr class="filete">
+  </div>
+  <div class="momento">
+    <h3>Ceremonia religiosa</h3>
+    <span class="hora"><span class="pendiente">hora por definir</span></span>
+    <address><span class="pendiente">Nombre del templo</span></address>
+  </div>
+  <div class="momento">
+    <h3>Recepción</h3>
+    <span class="hora"><span class="pendiente">hora por definir</span></span>
+    <address><span class="pendiente">Nombre del salón</span></address>
+  </div>
+  <p class="aviso">Los horarios se confirman pronto.</p>
+</template>
+
+<template id="panel-lugares">
+  <div class="panel-cabeza">
+    <h2 class="titulo" id="titulo-panel">Cómo llegar</h2>
+    <hr class="filete">
+  </div>
+  <div class="momento">
+    <h3>Ceremonia</h3>
+    <address><span class="pendiente">Dirección por definir</span></address>
+    <a class="boton boton--bloque" href="#" data-mapa>Abrir en el mapa</a>
+  </div>
+  <div class="momento">
+    <h3>Recepción</h3>
+    <address><span class="pendiente">Dirección por definir</span></address>
+    <a class="boton boton--bloque" href="#" data-mapa>Abrir en el mapa</a>
+  </div>
+</template>
+
+<template id="panel-vestimenta">
+  <div class="panel-cabeza">
+    <h2 class="titulo" id="titulo-panel">Código de vestimenta</h2>
+    <hr class="filete">
+  </div>
+  <p class="intro" style="text-align:center"><span class="pendiente">Formal — por definir</span></p>
+  <p class="aviso">Les pedimos reservar el blanco para la novia.</p>
+</template>
+
+<template id="panel-regalos">
+  <div class="panel-cabeza">
+    <h2 class="titulo" id="titulo-panel">Mesa de regalos</h2>
+    <hr class="filete">
+  </div>
+  <p class="intro" style="text-align:center">
+    Nuestro mayor regalo es tu presencia. Si además deseas obsequiarnos algo,
+    aquí te dejamos las opciones.
+  </p>
+  <div class="momento">
+    <h3>Tienda</h3>
+    <address><span class="pendiente">Tienda y número de mesa</span></address>
+  </div>
+  <div class="momento">
+    <h3>Lluvia de sobres</h3>
+    <address><span class="pendiente">Datos por definir</span></address>
+  </div>
+</template>
+
+<template id="panel-rsvp">
+  <div class="panel-cabeza">
+    <h2 class="titulo" id="titulo-panel">Confirmar asistencia</h2>
+    <hr class="filete">
+  </div>
+
+  <div class="progreso" id="progreso">
+    <i class="activo"></i><i></i><i></i>
+  </div>
+
+  <form id="form-rsvp" novalidate>
+
+    <div class="paso activo" data-paso="1">
+      <p class="pregunta">¿Podrás acompañarnos?</p>
+      <div class="eleccion">
+        <button type="button" data-respuesta="Sí">Sí, ahí estaré</button>
+        <button type="button" data-respuesta="No">No podré asistir</button>
+      </div>
+    </div>
+
+    <div class="paso" data-paso="2">
+      <p class="pregunta">¿Cómo te llamas?</p>
+      <div class="campo">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" autocomplete="name">
+      </div>
+      <div id="bloque-personas">
+        <label class="rotulo" style="display:block;text-align:center;margin-bottom:6px">Personas, incluyéndote</label>
+        <div class="contador">
+          <button type="button" id="menos" aria-label="Quitar una persona">−</button>
+          <output id="personas">1</output>
+          <button type="button" id="mas" aria-label="Agregar una persona">+</button>
+        </div>
+      </div>
+      <div class="pie-paso">
+        <button type="button" class="boton" data-atras>Atrás</button>
+        <button type="button" class="boton boton--lleno" data-siguiente>Continuar</button>
+      </div>
+      <p class="aviso" id="aviso-2" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="paso" data-paso="3">
+      <p class="pregunta">¿Quieres dejarles un mensaje?</p>
+      <div class="campo">
+        <label for="mensaje">Opcional</label>
+        <textarea id="mensaje" name="mensaje" rows="3"></textarea>
+      </div>
+      <div class="pie-paso">
+        <button type="button" class="boton" data-atras>Atrás</button>
+        <button type="submit" class="boton boton--lleno" id="btn-enviar">Enviar</button>
+      </div>
+      <p class="aviso" id="aviso-3" role="status" aria-live="polite"></p>
+    </div>
+
+  </form>
+
+  <div class="listo" id="listo" hidden>
+    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+      <circle cx="30" cy="30" r="24"/><path d="M19 30 L27 38 L42 22"/>
+    </svg>
+    <p class="titulo" id="texto-listo"></p>
+  </div>
+
+  <p class="separador">o si prefieres</p>
+  <div class="par-botones">
+    <a class="boton" id="wa-zulma" href="#" target="_blank" rel="noopener">Escribir a Zulma</a>
+    <a class="boton" id="wa-isaac" href="#" target="_blank" rel="noopener">Escribir a Isaac</a>
+  </div>
+</template>
+
 <script>
 /* ============================================================
-   CONFIGURACIÓN — lo único que hay que tocar cuando lleguen los datos
+   CONFIGURACIÓN — lo único que se toca cuando lleguen los datos
    ============================================================ */
 const CONFIG = {
-  // Formato: "AAAA-MM-DDTHH:MM:SS". Déjalo en null mientras no haya fecha.
-  fechaBoda: null,            // ej: "2027-02-13T16:00:00"
-
-  // WhatsApp con código de país (502 = Guatemala)
+  fechaBoda: null,                    // "2027-02-13T16:00:00"
   whatsappZulma: "50247704111",
   whatsappIsaac: "50237038589",
-
-  // Aquí irá la URL del Apps Script. Mientras esté vacía, el formulario
-  // funciona en modo demostración y no envía nada.
-  endpointRSVP: ""
+  endpointRSVP: ""                    // URL del Apps Script
 };
 
+const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 /* ============================================================
-   SALUDO PERSONALIZADO  ?invitado=Familia%20Villeda
+   PUERTAS Y MARIPOSAS
    ============================================================ */
 (function(){
-  const invitado = new URLSearchParams(location.search).get("invitado");
-  if(!invitado) return;
-  const limpio = invitado.trim().slice(0, 60);
-  document.getElementById("nombre-invitado").textContent = limpio;
+  const zaguan  = document.getElementById("zaguan");
+  const enjambre = document.getElementById("enjambre");
+  const boton   = document.getElementById("btn-abrir");
+  let abierto = false;
+
+  const ALA = `<svg viewBox="0 0 40 34" fill="none" aria-hidden="true">
+    <g class="ala">
+      <path d="M20 17 C13 3, 2 3, 3 13 C4 22, 14 22, 20 17Z" fill="rgba(255,255,255,.94)" stroke="rgba(190,175,150,.85)" stroke-width=".8"/>
+      <path d="M20 17 C14 27, 5 30, 5 23 C5 18, 15 16, 20 17Z" fill="rgba(255,255,255,.86)" stroke="rgba(190,175,150,.7)" stroke-width=".8"/>
+      <path d="M20 17 C27 3, 38 3, 37 13 C36 22, 26 22, 20 17Z" fill="rgba(255,255,255,.94)" stroke="rgba(190,175,150,.85)" stroke-width=".8"/>
+      <path d="M20 17 C26 27, 35 30, 35 23 C35 18, 25 16, 20 17Z" fill="rgba(255,255,255,.86)" stroke="rgba(190,175,150,.7)" stroke-width=".8"/>
+    </g>
+    <path d="M20 11 V24" stroke="rgba(150,135,112,.8)" stroke-width="1.1"/>
+  </svg>`;
+
+  function soltarMariposas(cuantas){
+    for(let i = 0; i < cuantas; i++){
+      const m = document.createElement("div");
+      m.className = "mariposa";
+      m.innerHTML = ALA;
+
+      const angulo   = (-160 + Math.random() * 140) * Math.PI / 180;
+      const distancia = 340 + Math.random() * 620;
+
+      m.style.setProperty("--x",    Math.cos(angulo) * distancia + "px");
+      m.style.setProperty("--y",    Math.sin(angulo) * distancia - 120 + "px");
+      m.style.setProperty("--tam",  16 + Math.random() * 22 + "px");
+      m.style.setProperty("--dur",  4 + Math.random() * 3.4 + "s");
+      m.style.setProperty("--esp",  Math.random() * 1.5 + "s");
+      m.style.setProperty("--giro", -50 + Math.random() * 100 + "deg");
+      m.querySelector(".ala").style.animationDuration = (.26 + Math.random() * .2) + "s";
+
+      enjambre.appendChild(m);
+      m.addEventListener("animationend", e => { if(e.animationName === "volar") m.remove(); });
+    }
+  }
+
+  function abrir(){
+    if(abierto) return;
+    abierto = true;
+
+    zaguan.classList.add("abierto");
+    document.body.classList.remove("sin-scroll");
+
+    if(!menosMovimiento){
+      setTimeout(() => soltarMariposas(16), 550);
+      setTimeout(() => soltarMariposas(8),  1500);
+    }
+
+    setTimeout(() => zaguan.classList.add("fuera"), menosMovimiento ? 0 : 2500);
+  }
+
+  boton.addEventListener("click", abrir);
+  zaguan.addEventListener("click", abrir);
+
+  if(menosMovimiento) abrir();
+})();
+
+/* ============================================================
+   SALUDO PERSONALIZADO   ?invitado=Familia%20Villeda
+   ============================================================ */
+(function(){
+  const quien = new URLSearchParams(location.search).get("invitado");
+  if(!quien) return;
+  document.getElementById("nombre-invitado").textContent = quien.trim().slice(0, 60);
   document.getElementById("saludo").hidden = false;
 })();
 
@@ -754,80 +936,175 @@ const CONFIG = {
 })();
 
 /* ============================================================
-   REVELADO AL HACER SCROLL
+   REVELADO AL SCROLL
    ============================================================ */
 (function(){
   const objetivos = document.querySelectorAll(".revelar");
-  if(!("IntersectionObserver" in window)){
+  if(!("IntersectionObserver" in window) || menosMovimiento){
     objetivos.forEach(el => el.classList.add("visible"));
     return;
   }
-  const observador = new IntersectionObserver((entradas, obs) => {
+  const obs = new IntersectionObserver((entradas, o) => {
     entradas.forEach(e => {
       if(!e.isIntersecting) return;
       e.target.classList.add("visible");
-      obs.unobserve(e.target);
+      o.unobserve(e.target);
     });
-  }, { threshold: .12, rootMargin: "0px 0px -60px 0px" });
-
-  objetivos.forEach(el => observador.observe(el));
+  }, { threshold:.12, rootMargin:"0px 0px -50px 0px" });
+  objetivos.forEach(el => obs.observe(el));
 })();
 
 /* ============================================================
-   ENLACES DE WHATSAPP
+   PANELES
    ============================================================ */
-(function(){
-  const texto = encodeURIComponent("¡Hola! Escribo por la invitación de boda de Zulma e Isaac. Quiero confirmar mi asistencia.");
-  document.getElementById("wa-zulma").href = "https://wa.me/" + CONFIG.whatsappZulma + "?text=" + texto;
-  document.getElementById("wa-isaac").href = "https://wa.me/" + CONFIG.whatsappIsaac + "?text=" + texto;
-})();
+const Panel = (function(){
+  const telon  = document.getElementById("telon");
+  const cuerpo = document.getElementById("cuerpo-panel");
+  let ultimoFoco = null;
 
-/* ============================================================
-   FORMULARIO
-   Todavía no envía a ningún lado: falta conectar el Apps Script.
-   ============================================================ */
-(function(){
-  const form  = document.getElementById("form-rsvp");
-  const aviso = document.getElementById("aviso-form");
-  const boton = document.getElementById("btn-enviar");
+  function abrir(id){
+    const plantilla = document.getElementById(id);
+    if(!plantilla) return;
 
-  form.addEventListener("submit", async ev => {
-    ev.preventDefault();
+    ultimoFoco = document.activeElement;
+    cuerpo.innerHTML = "";
+    cuerpo.appendChild(plantilla.content.cloneNode(true));
 
-    const datos = Object.fromEntries(new FormData(form).entries());
+    telon.classList.add("visible");
+    document.body.classList.add("sin-scroll");
 
-    if(!datos.nombre || !datos.nombre.trim()){
-      aviso.textContent = "Escribe tu nombre para poder registrarte.";
-      document.getElementById("nombre").focus();
-      return;
-    }
-    if(!datos.asistencia){
-      aviso.textContent = "Indícanos si podrás acompañarnos.";
-      return;
-    }
+    if(id === "panel-rsvp") RSVP.iniciar();
+    prepararWhatsApp();
 
-    if(!CONFIG.endpointRSVP){
-      aviso.textContent = "Vista previa: el formulario todavía no está conectado.";
-      console.log("Datos capturados:", datos);
-      return;
-    }
+    const primero = cuerpo.querySelector("button, a, input");
+    if(primero) primero.focus({ preventScroll:true });
+  }
 
-    boton.disabled = true;
-    aviso.textContent = "Enviando…";
-    try{
-      await fetch(CONFIG.endpointRSVP, {
-        method: "POST",
-        body: JSON.stringify(datos)
-      });
-      form.hidden = true;
-      aviso.textContent = datos.asistencia === "Sí"
-        ? "¡Confirmado! Nos vemos ese día."
-        : "Gracias por avisarnos. Te vamos a extrañar.";
-    }catch(err){
-      boton.disabled = false;
-      aviso.textContent = "No se pudo enviar. Intenta de nuevo o escríbenos por WhatsApp.";
-    }
+  function cerrar(){
+    telon.classList.remove("visible");
+    document.body.classList.remove("sin-scroll");
+    if(ultimoFoco) ultimoFoco.focus({ preventScroll:true });
+    setTimeout(() => { if(!telon.classList.contains("visible")) cuerpo.innerHTML = ""; }, 450);
+  }
+
+  document.querySelectorAll("[data-abre]").forEach(b =>
+    b.addEventListener("click", () => abrir(b.dataset.abre))
+  );
+  document.getElementById("btn-cerrar").addEventListener("click", cerrar);
+  telon.addEventListener("click", e => { if(e.target === telon) cerrar(); });
+  document.addEventListener("keydown", e => {
+    if(e.key === "Escape" && telon.classList.contains("visible")) cerrar();
   });
+
+  return { abrir, cerrar };
+})();
+
+/* ============================================================
+   WHATSAPP
+   ============================================================ */
+function prepararWhatsApp(){
+  const texto = encodeURIComponent("¡Hola! Escribo por la invitación de boda de Zulma e Isaac. Quiero confirmar mi asistencia.");
+  const z = document.getElementById("wa-zulma");
+  const i = document.getElementById("wa-isaac");
+  if(z) z.href = "https://wa.me/" + CONFIG.whatsappZulma + "?text=" + texto;
+  if(i) i.href = "https://wa.me/" + CONFIG.whatsappIsaac + "?text=" + texto;
+}
+
+/* ============================================================
+   FORMULARIO POR PASOS
+   ============================================================ */
+const RSVP = (function(){
+  let datos, personas, paso;
+
+  function iniciar(){
+    datos = { asistencia:"", nombre:"", personas:1, mensaje:"" };
+    personas = 1;
+    paso = 1;
+
+    const form     = document.getElementById("form-rsvp");
+    const progreso = document.getElementById("progreso");
+    const listo    = document.getElementById("listo");
+    const salidaP  = document.getElementById("personas");
+    const bloqueP  = document.getElementById("bloque-personas");
+
+    const pasos = () => form.querySelectorAll(".paso");
+    const puntos = () => progreso.querySelectorAll("i");
+
+    function ir(n){
+      paso = n;
+      pasos().forEach(p => p.classList.toggle("activo", +p.dataset.paso === n));
+      puntos().forEach((p, i) => p.classList.toggle("activo", i < n));
+    }
+
+    // paso 1
+    form.querySelectorAll("[data-respuesta]").forEach(b => {
+      b.addEventListener("click", () => {
+        datos.asistencia = b.dataset.respuesta;
+        bloqueP.hidden = datos.asistencia === "No";
+        ir(2);
+        document.getElementById("nombre").focus({ preventScroll:true });
+      });
+    });
+
+    // contador
+    function pinta(){ salidaP.textContent = personas; }
+    document.getElementById("mas").addEventListener("click", () => { if(personas < 10){ personas++; pinta(); } });
+    document.getElementById("menos").addEventListener("click", () => { if(personas > 1){ personas--; pinta(); } });
+
+    // navegación
+    form.querySelectorAll("[data-atras]").forEach(b =>
+      b.addEventListener("click", () => ir(paso - 1))
+    );
+
+    form.querySelector("[data-siguiente]").addEventListener("click", () => {
+      const nombre = document.getElementById("nombre").value.trim();
+      const aviso  = document.getElementById("aviso-2");
+      if(nombre.length < 3){
+        aviso.textContent = "Escribe tu nombre para poder registrarte.";
+        aviso.classList.add("error");
+        document.getElementById("nombre").focus();
+        return;
+      }
+      aviso.textContent = "";
+      aviso.classList.remove("error");
+      datos.nombre = nombre;
+      datos.personas = datos.asistencia === "No" ? 0 : personas;
+      ir(3);
+    });
+
+    // envío
+    form.addEventListener("submit", async ev => {
+      ev.preventDefault();
+      const aviso = document.getElementById("aviso-3");
+      const boton = document.getElementById("btn-enviar");
+      datos.mensaje = document.getElementById("mensaje").value.trim();
+
+      if(!CONFIG.endpointRSVP){
+        aviso.textContent = "Vista previa: todavía no está conectado.";
+        console.log("Datos capturados:", datos);
+        return;
+      }
+
+      boton.disabled = true;
+      aviso.classList.remove("error");
+      aviso.textContent = "Enviando…";
+
+      try{
+        await fetch(CONFIG.endpointRSVP, { method:"POST", body:JSON.stringify(datos) });
+        form.hidden = true;
+        progreso.hidden = true;
+        listo.hidden = false;
+        document.getElementById("texto-listo").textContent =
+          datos.asistencia === "Sí" ? "¡Confirmado! Nos vemos ese día." : "Gracias por avisarnos. Te vamos a extrañar.";
+      }catch(err){
+        boton.disabled = false;
+        aviso.classList.add("error");
+        aviso.textContent = "No se pudo enviar. Intenta otra vez o escríbenos por WhatsApp.";
+      }
+    });
+  }
+
+  return { iniciar };
 })();
 </script>
 
