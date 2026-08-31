@@ -283,12 +283,29 @@ button{ font:inherit; }
 
 .bendicion{ max-width:32ch; margin:0 auto 2em; font-size:.96rem; color:var(--tinta-suave); }
 
+.linaje{ margin-bottom:2em; }
+
 .padres{
   display:flex; gap:26px; justify-content:center; flex-wrap:wrap;
-  font-size:.92rem; color:var(--tinta-suave);
-  margin-bottom:2em;
+  font-size:.95rem; color:var(--tinta);
+  line-height:1.55;
 }
-.padres div{ min-width:140px; }
+.padres div{ min-width:150px; max-width:230px; }
+
+.padres--segunda{
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px solid var(--arena-tenue);
+  font-size:.88rem;
+}
+
+.quien{
+  display:block;
+  font-family:var(--sans); font-weight:300;
+  font-size:.62rem; letter-spacing:.18em;
+  color:var(--tinta-suave);
+  margin-bottom:.45em;
+}
 
 .fecha-portada{ margin-top:1.2em; }
 
@@ -638,9 +655,31 @@ body.abierta .portada > .esquina{ transition-delay:1.35s; }
       el día en que unimos nuestras vidas.
     </p>
 
-    <div class="padres">
-      <div><span class="pendiente">Padres de la novia</span></div>
-      <div><span class="pendiente">Padres del novio</span></div>
+    <div class="linaje">
+      <div class="padres">
+        <div>
+          <span class="quien">Padre de la novia</span>
+          Silvestre Villavicencio
+          <!-- Si Zulma prefiere incluir a su mamá, descomenta la línea de abajo:
+          <br>Nombre de la mamá &dagger; -->
+        </div>
+        <div>
+          <span class="quien">Madre del novio</span>
+          Yasminia Godoy Sierra
+        </div>
+      </div>
+
+      <div class="padres padres--segunda">
+        <div>
+          <span class="quien">Padrinos de la novia</span>
+          <span class="pendiente">por definir</span>
+        </div>
+        <div>
+          <span class="quien">Padrinos del novio</span>
+          Brenda Esperanza Muxin Donis<br>
+          Jhonatan Efraín Villeda
+        </div>
+      </div>
     </div>
 
     <h1 class="nombres">
@@ -754,16 +793,21 @@ body.abierta .portada > .esquina{ transition-delay:1.35s; }
     <h2 class="titulo" id="titulo-panel">Cómo llegar</h2>
     <hr class="filete">
   </div>
+  <p class="intro" style="text-align:center">
+    La boda será en la <strong>Ciudad de Guatemala</strong>.
+  </p>
   <div class="momento">
     <h3>Ceremonia</h3>
-    <address><span class="pendiente">Dirección por definir</span></address>
-    <a class="boton boton--bloque" href="#" data-mapa>Abrir en el mapa</a>
+    <address><span class="pendiente">Templo por confirmar</span></address>
   </div>
   <div class="momento">
     <h3>Recepción</h3>
-    <address><span class="pendiente">Dirección por definir</span></address>
-    <a class="boton boton--bloque" href="#" data-mapa>Abrir en el mapa</a>
+    <address><span class="pendiente">Salón por confirmar</span></address>
   </div>
+  <p class="aviso">
+    En cuanto se reserven los lugares, aquí aparecerán las direcciones
+    y un botón para abrirlas en el mapa.
+  </p>
 </template>
 
 <template id="panel-vestimenta">
@@ -820,6 +864,12 @@ body.abierta .portada > .esquina{ transition-delay:1.35s; }
         <label for="nombre">Nombre completo</label>
         <input type="text" id="nombre" name="nombre" autocomplete="name">
       </div>
+      <div class="campo">
+        <label for="telefono">Número de celular</label>
+        <input type="tel" id="telefono" name="telefono"
+               inputmode="numeric" autocomplete="tel"
+               maxlength="9" placeholder="0000 0000">
+      </div>
       <div id="bloque-personas">
         <label class="rotulo" style="display:block;text-align:center;margin-bottom:6px">Personas, incluyéndote</label>
         <div class="contador">
@@ -869,10 +919,13 @@ body.abierta .portada > .esquina{ transition-delay:1.35s; }
    CONFIGURACIÓN — lo único que se toca cuando lleguen los datos
    ============================================================ */
 const CONFIG = {
-  fechaBoda: null,                    // "2027-02-13T16:00:00"
+  // Fecha provisional. Cámbiala cuando los novios confirmen el día exacto.
+  fechaBoda: "2026-12-20T16:00:00",
+  fechaProvisional: true,
+
   whatsappZulma: "50247704111",
   whatsappIsaac: "50237038589",
-  endpointRSVP: ""                    // URL del Apps Script
+  endpointRSVP: "https://script.google.com/macros/s/AKfycbx916GG1pS-Zjq4Ko0IDbdI3_endQ06QZqRhStsg9060bGCym1cN-9P3jdoJizkEIgpaA/exec"                    // URL del Apps Script
 };
 
 const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -931,16 +984,16 @@ const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").ma
       return;
     }
 
-    // la escena empieza a avanzar cuando las hojas ya cedieron un poco
-    setTimeout(() => document.body.classList.add("abierta"), 380);
+    // la escena avanza mientras las hojas giran, no después
+    setTimeout(() => document.body.classList.add("abierta"), 140);
 
     // las mariposas salen en hilera por la rendija
-    setTimeout(() => soltarMariposas(11), 420);
-    setTimeout(() => soltarMariposas(7),  1250);
-    setTimeout(() => soltarMariposas(4),  2050);
+    setTimeout(() => soltarMariposas(11), 380);
+    setTimeout(() => soltarMariposas(7),  1150);
+    setTimeout(() => soltarMariposas(4),  1900);
 
-    setTimeout(() => zaguan.classList.add("velado"), 1500);
-    setTimeout(() => zaguan.classList.add("fuera"),  2900);
+    setTimeout(() => zaguan.classList.add("apagando"), 1400);
+    setTimeout(() => zaguan.classList.add("fuera"),    2900);
   }
 
   boton.addEventListener("click", abrir);
@@ -967,7 +1020,10 @@ const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").ma
   const aviso = document.getElementById("aviso-reloj");
   if(!CONFIG.fechaBoda) return;
 
-  aviso.hidden = true;
+  aviso.textContent = CONFIG.fechaProvisional
+    ? "Fecha aproximada. Se confirma pronto."
+    : "";
+  aviso.hidden = !CONFIG.fechaProvisional;
   const destino = new Date(CONFIG.fechaBoda).getTime();
   const casilla = u => reloj.querySelector('[data-u="' + u + '"]');
 
@@ -1053,7 +1109,14 @@ const RSVP = (function(){
   let datos, personas, paso;
 
   function iniciar(){
-    datos = { asistencia:"", nombre:"", personas:1, mensaje:"" };
+    datos = {
+      asistencia: "",
+      nombre: "",
+      telefono: "",
+      personas: 1,
+      mensaje: "",
+      invitado: new URLSearchParams(location.search).get("invitado") || ""
+    };
     personas = 1;
     paso = 1;
 
@@ -1093,17 +1156,32 @@ const RSVP = (function(){
     );
 
     form.querySelector("[data-siguiente]").addEventListener("click", () => {
-      const nombre = document.getElementById("nombre").value.trim();
-      const aviso  = document.getElementById("aviso-2");
-      if(nombre.length < 3){
-        aviso.textContent = "Escribe tu nombre para poder registrarte.";
+      const campoNom = document.getElementById("nombre");
+      const campoTel = document.getElementById("telefono");
+      const nombre   = campoNom.value.trim();
+      const telefono = campoTel.value.replace(/\D/g, "");
+      const aviso    = document.getElementById("aviso-2");
+
+      const falla = m => {
+        aviso.textContent = m;
         aviso.classList.add("error");
-        document.getElementById("nombre").focus();
+      };
+
+      if(nombre.length < 3){
+        falla("Escribe tu nombre para poder registrarte.");
+        campoNom.focus();
         return;
       }
+      if(telefono.length !== 8){
+        falla("El celular lleva 8 dígitos.");
+        campoTel.focus();
+        return;
+      }
+
       aviso.textContent = "";
       aviso.classList.remove("error");
-      datos.nombre = nombre;
+      datos.nombre   = nombre;
+      datos.telefono = telefono;
       datos.personas = datos.asistencia === "No" ? 0 : personas;
       ir(3);
     });
