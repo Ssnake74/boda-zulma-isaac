@@ -925,7 +925,7 @@ const CONFIG = {
 
   whatsappZulma: "50247704111",
   whatsappIsaac: "50237038589",
-  endpointRSVP: "https://script.google.com/macros/s/AKfycbx916GG1pS-Zjq4Ko0IDbdI3_endQ06QZqRhStsg9060bGCym1cN-9P3jdoJizkEIgpaA/exec"                    // URL del Apps Script
+  endpointRSVP: ""                    // URL del Apps Script
 };
 
 const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1204,13 +1204,32 @@ const RSVP = (function(){
       aviso.textContent = "Enviando…";
 
       try{
-        await fetch(CONFIG.endpointRSVP, { method:"POST", body:JSON.stringify(datos) });
+        const respuesta = await fetch(CONFIG.endpointRSVP, {
+          method: "POST",
+          body: JSON.stringify(datos)
+        });
+
+        // Si se puede leer la respuesta, se verifica de verdad.
+        // Si el navegador la bloquea, el envío igual salió: se avisa en consola.
+        let resultado = null;
+        try{
+          resultado = await respuesta.json();
+        }catch(sinLectura){
+          console.warn("No se pudo leer la respuesta del servidor:", sinLectura);
+        }
+
+        if(resultado && resultado.ok === false){
+          throw new Error(resultado.error || "El servidor rechazó el registro.");
+        }
+
         form.hidden = true;
         progreso.hidden = true;
         listo.hidden = false;
         document.getElementById("texto-listo").textContent =
           datos.asistencia === "Sí" ? "¡Confirmado! Nos vemos ese día." : "Gracias por avisarnos. Te vamos a extrañar.";
+
       }catch(err){
+        console.error("Fallo al registrar la confirmación:", err);
         boton.disabled = false;
         aviso.classList.add("error");
         aviso.textContent = "No se pudo enviar. Intenta otra vez o escríbenos por WhatsApp.";
